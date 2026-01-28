@@ -1,19 +1,16 @@
 import express from "express";
+import connectDB from "./db.js";
 import logger from "../utils/logger.js";
-import dbLoader from "./db.js";
 
-export default async function appLoader() {
+export default async function createApp() {
   const app = express();
 
-  // Middlewares
   app.use(express.json());
-  logger.info("Middlewares loaded");
 
-  // Database
-  await dbLoader();
+  await connectDB();
 
-  // Routes (empty for now)
-  logger.info("Routes mounted: 0 endpoints");
+  logger.info("✅ Middlewares loaded");
+  logger.info(" App bootstrapped");
 
   return app;
 }
