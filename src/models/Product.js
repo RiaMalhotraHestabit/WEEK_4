@@ -32,19 +32,19 @@ const ProductSchema = new mongoose.Schema(
   }
 );
 
-/* ⭐ Virtual rating */
+/*  Virtual rating */
 ProductSchema.virtual("rating").get(function () {
   if (this.ratingCount === 0) return 0;
   return this.ratingSum / this.ratingCount;
 });
 
-/* ⏱ TTL index (30 days) */
+/* TTL index (30 days) */
 ProductSchema.index(
   { createdAt: 1 },
   { expireAfterSeconds: 60 * 60 * 24 * 30 }
 );
 
-/* 🚀 Compound index */
+/* Compound index */
 ProductSchema.index({ status: 1, createdAt: -1 });
 
 export default mongoose.model("Product", ProductSchema);
