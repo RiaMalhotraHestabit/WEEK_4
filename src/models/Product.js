@@ -23,6 +23,10 @@ const ProductSchema = new mongoose.Schema(
     status: {
       type: String,
       default: "active"
+    },
+    deletedAt: {
+      type: Date,
+      default: null
     }
   },
   {

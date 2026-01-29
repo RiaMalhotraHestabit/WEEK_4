@@ -25,6 +25,25 @@ class ProductRepository {
   delete(id) {
     return Product.findByIdAndDelete(id);
   }
+
+  findWithFilters(query, options) {
+    return Product.find(query)
+      .sort(options.sort)
+      .skip(options.skip)
+      .limit(options.limit);
+  }
+
+  countWithFilters(query) {
+    return Product.countDocuments(query);
+  }
+
+  softDeleteById(id) {
+    return Product.findByIdAndUpdate(
+      id,
+      { deletedAt: new Date() },
+      { new: true }
+    );
+  }
 }
 
 export default new ProductRepository();
