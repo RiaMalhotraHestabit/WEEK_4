@@ -20,7 +20,7 @@ async function seed() {
     await UserRepository.create(u);
   }
 
-  console.log('✅ Users seeded to', process.env.DB_URL);
+  console.log('Users seeded to', process.env.DB_URL);
   await mongoose.disconnect();
 }
 

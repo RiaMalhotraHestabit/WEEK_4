@@ -7,23 +7,22 @@ import { errorMiddleware } from "../middlewares/error.middleware.js";
 export default async function createApp() {
   const app = express();
 
-  // 1️⃣ Core middlewares
+  // 1️Core middlewares
   app.use(express.json());
 
-  logger.info("✅ Core middlewares loaded");
+  logger.info("Core middlewares loaded");
 
-  // 2️⃣ Database
+  // 2️ Database
   await connectDB();
-  logger.info("✅ Database connected");
+  logger.info("Database connected");
 
-  // 3️⃣ Routes
+  // 3️ Routes
   app.use("/products", productRoutes);
-  logger.info("✅ Routes mounted: /products");
-
-  // 4️⃣ Error middleware (ALWAYS LAST)
+  logger.info("Routes mounted: /products");
+  // 4️   Error middleware (ALWAYS LAST)
   app.use(errorMiddleware);
 
-  logger.info("🚀 App bootstrapped successfully");
+  logger.info("App bootstrapped successfully");
 
   return app;
 }
