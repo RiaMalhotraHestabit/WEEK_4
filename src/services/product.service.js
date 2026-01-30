@@ -64,6 +64,12 @@ export const getProducts = async (params) => {
   };
 };
 
+export const createProduct = async (data) => {
+  const product = await ProductRepo.create(data);
+  return product;
+};
+
+
 export const deleteProduct = async (id) => {
   const product = await ProductRepo.softDeleteById(id);
 
