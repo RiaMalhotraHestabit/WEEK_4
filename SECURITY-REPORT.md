@@ -106,7 +106,7 @@ Validation is implemented using centralized middleware to ensure that incoming r
 
 **Screenshot:**
 
-![NoSQL Injection Blocked](./screenshots/nosql.png)
+![NoSQL Injection Blocked](./screenshots/N0SQL_injection.png)
 
 ---
 
@@ -133,7 +133,7 @@ Validation is implemented using centralized middleware to ensure that incoming r
 
 **Screenshot:**
 
-![XSS Blocked](./screenshots/xss.png)
+![XSS Blocked](./screenshots/XSS_Attempt.png)
 
 ---
 
