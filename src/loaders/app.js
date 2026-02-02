@@ -1,6 +1,7 @@
 import express from "express";
 import connectDB from "./db.js";
 import logger from "../utils/logger.js";
+import tracing from "../utils/tracing.js";
 
 import userRoutes from "../routes/user.routes.js";
 import productRoutes from "../routes/product.routes.js";
@@ -12,30 +13,37 @@ import {
 } from "../middlewares/security.js";
 
 import { errorMiddleware } from "../middlewares/error.middleware.js";
+import requestLogger from "../middlewares/requestLogger.middleware.js";
 
 export default async function createApp() {
   const app = express();
 
-  /* 1️⃣ SECURITY MIDDLEWARES (STEP-6) */
+  /* 1️⃣ SECURITY */
   app.use(helmetMiddleware);
   app.use(corsMiddleware);
-  app.use(rateLimiter);
 
-  /* 2️⃣ BODY PARSER WITH LIMIT */
+  /* 2️⃣ BODY PARSER */
   app.use(express.json({ limit: "10kb" }));
 
-  logger.info("Security & core middlewares loaded");
+  /* 3️⃣ TRACING + LOGGING (DAY-5) */
+  app.use(tracing);
+  app.use(requestLogger);
 
-  /* 3️⃣ DATABASE */
+  /* 4️⃣ RATE LIMITING */
+  app.use(rateLimiter);
+
+  logger.info("Security, tracing & core middlewares loaded");
+
+  /* 5️⃣ DATABASE */
   await connectDB();
   logger.info("Database connected");
 
-  /* 4️⃣ ROUTES */
-  app.use("/users", userRoutes);
-  app.use("/products", productRoutes);
+  /* 6️⃣ ROUTES */
+  app.use("/api/users", userRoutes);
+  app.use("/api/products", productRoutes);
   logger.info("Routes mounted");
 
-  /* 5️⃣ ERROR HANDLER (ALWAYS LAST) */
+  /* 7️⃣ ERROR HANDLER (ALWAYS LAST) */
   app.use(errorMiddleware);
 
   logger.info("App bootstrapped successfully");
