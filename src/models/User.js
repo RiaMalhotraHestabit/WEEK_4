@@ -15,7 +15,7 @@ userSchema.virtual('fullName').get(function () {
   return `${this.firstName} ${this.lastName}`;
 });
 
-// ✅ Pre-save hook (async) — remove next()
+// Pre-save hook (async) — remove next()
 userSchema.pre('save', async function () {
   if (!this.isModified('password')) return;
   this.password = await bcrypt.hash(this.password, 10);
