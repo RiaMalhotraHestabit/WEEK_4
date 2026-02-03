@@ -5,6 +5,7 @@ import logger from "../utils/logger.js";
 const connection = new IORedis({
   host: "127.0.0.1",
   port: 6379,
+  maxRetriesPerRequest: null,
 });
 
 export const emailQueue = new Queue("email-queue", {
@@ -45,4 +46,5 @@ if (process.env.RUN_WORKER === "true") {
       error: err.message,
     });
   });
+  logger.info("Email worker started");
 }
